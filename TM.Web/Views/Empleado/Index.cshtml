@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TM.Arquitecture.Models.Empleado>
+
+@{
+    ViewData["Title"] = "Empleados";
+}
+
+<h1>Empleados</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Puesto</th>
+            <th>Departamento</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empleado in Model)
+        {
+            <tr>
+                <td>@empleado.Nombre</td>
+                <td>@empleado.Apellido</td>
+                <td>@empleado.Puesto</td>
+                <td>@empleado.Departamento</td>
+                <td>
+                    <a href="@Url.Action("Details", "Empleado", new { id = empleado.Id })">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

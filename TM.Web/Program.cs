@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using TM.Arquitecture.Models;
+using TM.Data.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>(); // Registro de Repositories
+
+builder.Services.AddDbContext<ApDatabaseContext>(options
+    => options.UseSqlServer("Server=DESKTOP-PCB1OR7;Database=APDatadb;Trusted_Connection=True;TrustServerCertificate=True;"));
 
 var app = builder.Build();
 

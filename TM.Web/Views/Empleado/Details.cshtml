@@ -1,0 +1,41 @@
+﻿@model TM.Arquitecture.Models.Empleado
+
+@{
+    ViewData["Title"] = "Empleado Details";
+}
+
+<h1>Empleado Details</h1>
+
+<div>
+    <h4>Empleado</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            Nombre
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Nombre
+        </dd>
+        <dt class="col-sm-3">
+            Apellido
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Apellido
+        </dd>
+        <dt class="col-sm-3">
+            Puesto
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Puesto
+        </dd>
+        <dt class="col-sm-3">
+            Departamento
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Departamento
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

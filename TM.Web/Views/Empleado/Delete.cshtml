@@ -1,0 +1,46 @@
+﻿@model TM.Arquitecture.Models.Empleado
+
+@{
+    ViewData["Title"] = "Delete Empleado";
+}
+
+<h1>Delete Empleado</h1>
+
+<h4>Empleado</h4>
+<hr />
+<div>
+    <h4>Are you sure you want to delete this?</h4>
+    <dl class="row">
+        <dt class="col-sm-3">
+            Nombre
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Nombre
+        </dd>
+        <dt class="col-sm-3">
+            Apellido
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Apellido
+        </dd>
+        <dt class="col-sm-3">
+            Puesto
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Puesto
+        </dd>
+        <dt class="col-sm-3">
+            Departamento
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Departamento
+        </dd>
+    </dl>
+</div>
+<form asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
