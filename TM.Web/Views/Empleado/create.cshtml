@@ -1,13 +1,7 @@
 ﻿@model TM.Arquitecture.Models.Empleado
 
-@{
-    ViewData["Title"] = "Create Empleado";
-}
+<h2>Crear Empleado</h2>
 
-<h1>Create Empleado</h1>
-
-<h4>Empleado</h4>
-<hr />
 <form asp-action="Create">
     <div class="form-group">
         <label asp-for="Nombre" class="control-label"></label>
@@ -30,10 +24,6 @@
         <span asp-validation-for="Departamento" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Crear" class="btn btn-primary" />
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>

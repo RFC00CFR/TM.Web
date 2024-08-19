@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using TM.Arquitecture.Models;
-using TM.Data.Repository;
+using TM.Data.EmpleadoRepository;
 
 namespace TM.Web.Controllers
 {
@@ -14,15 +15,17 @@ namespace TM.Web.Controllers
             _empleadoRepository = empleadoRepository;
         }
 
+        // GET: Empleado
         public IActionResult Index()
         {
-            var empleados = _empleadoRepository.GetAll();
+            var empleados = _empleadoRepository.GetAllEmpleados();
             return View(empleados);
         }
 
+        // GET: Empleado/Details/5
         public IActionResult Details(int id)
         {
-            var empleado = _empleadoRepository.GetById(id);
+            var empleado = _empleadoRepository.GetEmpleadoById(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -39,11 +42,11 @@ namespace TM.Web.Controllers
         // POST: Empleado/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Empleado empleado)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Puesto,Departamento")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
-                _empleadoRepository.Add(empleado);
+                _empleadoRepository.AddEmpleado(empleado);
                 return RedirectToAction(nameof(Index));
             }
             return View(empleado);
@@ -52,7 +55,7 @@ namespace TM.Web.Controllers
         // GET: Empleado/Edit/5
         public IActionResult Edit(int id)
         {
-            var empleado = _empleadoRepository.GetById(id);
+            var empleado = _empleadoRepository.GetEmpleadoById(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -63,7 +66,7 @@ namespace TM.Web.Controllers
         // POST: Empleado/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Empleado empleado)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Puesto,Departamento")] Empleado empleado)
         {
             if (id != empleado.Id)
             {
@@ -72,21 +75,7 @@ namespace TM.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _empleadoRepository.Update(empleado);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (_empleadoRepository.GetById(id) == null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _empleadoRepository.UpdateEmpleado(empleado);
                 return RedirectToAction(nameof(Index));
             }
             return View(empleado);
@@ -95,7 +84,7 @@ namespace TM.Web.Controllers
         // GET: Empleado/Delete/5
         public IActionResult Delete(int id)
         {
-            var empleado = _empleadoRepository.GetById(id);
+            var empleado = _empleadoRepository.GetEmpleadoById(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -106,9 +95,13 @@ namespace TM.Web.Controllers
         // POST: Empleado/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _empleadoRepository.Delete(id);
+            var result = _empleadoRepository.DeleteEmpleado(id);
+            if (!result)
+            {
+                return NotFound();
+            }
             return RedirectToAction(nameof(Index));
         }
     }

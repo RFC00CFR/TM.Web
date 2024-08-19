@@ -24,6 +24,4 @@ public partial class Ticket
     public virtual Empleado AsignadoANavigation { get; set; } = null!;
 
     public virtual Empleado AsignadoPorNavigation { get; set; } = null!;
-
-    public virtual ICollection<TicketsEmpleado> TicketsEmpleados { get; set; } = new List<TicketsEmpleado>();
 }

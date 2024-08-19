@@ -1,15 +1,15 @@
 ﻿@model TM.Arquitecture.Models.Empleado
 
 @{
-    ViewData["Title"] = "Edit Empleado";
+    ViewData["Title"] = "Editar Empleado";
 }
 
-<h1>Edit Empleado</h1>
+<h2>@ViewData["Title"]</h2>
 
 <h4>Empleado</h4>
 <hr />
+
 <form asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Nombre" class="control-label"></label>
         <input asp-for="Nombre" class="form-control" />
@@ -30,8 +30,9 @@
         <input asp-for="Departamento" class="form-control" />
         <span asp-validation-for="Departamento" class="text-danger"></span>
     </div>
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>

@@ -1,15 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using TM.Arquitecture.Models;
-using TM.Data.Repository;
+using TM.Data.EmpleadoRepository;
+using TM.Data.TicketRepository;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>(); // Registro de Repositories
 
-builder.Services.AddDbContext<ApDatabaseContext>(options
-    => options.UseSqlServer("Server=DESKTOP-PCB1OR7;Database=APDatadb;Trusted_Connection=True;TrustServerCertificate=True;"));
+
+//Connection String
+builder.Services.AddDbContext<TmDatabaseContext>(options
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-PCB1OR7;Database=APDatadb;Trusted_Connection=True;TrustServerCertificate=True;")));
+
+//EmpleadoRepository
+builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
+
+//TicketRepository
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 var app = builder.Build();
 

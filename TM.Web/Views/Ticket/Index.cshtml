@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TM.Arquitecture.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Ticket</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Prioridad</th>
+            <th>Fecha de Asignado</th>
+            <th>Fecha de Entrega</th>
+            <th>Estado</th>
+            <th>Asignado Por</th>
+            <th>Asignado A</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.Prioridad</td>
+                    <td>@item.FechaDeAsignado.ToString("d")</td>
+                    <td>@item.FechaDeEntrega.ToString("d")</td>
+                    <td>@item.Estado</td>
+                    <td>@item.AsignadoPorNavigation?.Nombre</td>
+                    
+                    <td>@item.AsignadoANavigation?.Nombre</td>
+                    
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-info">Details</a>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="9">No tickets available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

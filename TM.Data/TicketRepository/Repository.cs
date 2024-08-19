@@ -1,52 +1,66 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using TM.Arquitecture.Models;
 
-namespace TM.Data.Repository
+namespace TM.Data.TicketRepository
 {
+    public interface IRepository<T> where T : class
+    {
+        IEnumerable<T> GetAll();
+        T GetById(int id);
+        bool Add(T entity);
+        T Update(T entity);
+        bool Delete(int id);
+        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+    }
+
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly ApDatabaseContext _context;
+        protected readonly TmDatabaseContext _context;
+        private DbSet<T> _dbSet;
 
-        public Repository(ApDatabaseContext context)
+        public Repository(TmDatabaseContext context)
         {
             _context = context;
+            _dbSet = _context.Set<T>();
         }
 
         public bool Add(T entity)
         {
-            _context.Set<T>().Add(entity);
+            _dbSet.Add(entity);
             _context.SaveChanges();
             return true;
         }
 
         public bool Delete(int id)
         {
-            var entity = _context.Set<T>().Find(id);
-            if (entity == null) return false;
+            var entity = GetById(id);
+            if (entity == null)
+            {
+                return false;
+            }
 
-            _context.Set<T>().Remove(entity);
+            _dbSet.Remove(entity);
             _context.SaveChanges();
             return true;
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().Where(predicate).ToList();
+            return _dbSet.Where(predicate).ToList();
         }
 
         public IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _dbSet.ToList();
         }
 
         public T GetById(int id)
         {
-            var entity = _context.Set<T>().Find(id);
+            var entity = _dbSet.Find(id);
             if (entity == null)
             {
                 throw new KeyNotFoundException($"Entity with id {id} not found.");
@@ -56,7 +70,7 @@ namespace TM.Data.Repository
 
         public T Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+            _dbSet.Update(entity);
             _context.SaveChanges();
             return entity;
         }

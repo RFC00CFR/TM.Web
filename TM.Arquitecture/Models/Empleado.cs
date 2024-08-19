@@ -18,6 +18,4 @@ public partial class Empleado
     public virtual ICollection<Ticket> TicketAsignadoANavigations { get; set; } = new List<Ticket>();
 
     public virtual ICollection<Ticket> TicketAsignadoPorNavigations { get; set; } = new List<Ticket>();
-
-    public virtual ICollection<TicketsEmpleado> TicketsEmpleados { get; set; } = new List<TicketsEmpleado>();
 }
