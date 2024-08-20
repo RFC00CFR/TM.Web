@@ -58,8 +58,15 @@ namespace TM.Web.Controllers
                 _ticketRepository.AddTicket(ticket);
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                _ticketRepository.AddTicket(ticket);
+                return RedirectToAction(nameof(Index));
+            }
             ViewData["AsignadoPor"] = new SelectList(_empleadoRepository.GetAllEmpleados(), "Id", "Nombre", ticket.AsignadoPor);
             ViewData["AsignadoA"] = new SelectList(_empleadoRepository.GetAllEmpleados(), "Id", "Nombre", ticket.AsignadoA);
+
+
             return View(ticket);
         }
 
