@@ -13,7 +13,7 @@ builder.Services.AddControllersWithViews();
 
 //Connection String
 builder.Services.AddDbContext<TmDatabaseContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-PCB1OR7;Database=APDatadb;Trusted_Connection=True;TrustServerCertificate=True;")));
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-PCB1OR7;Database=TM_database;Trusted_Connection=True;TrustServerCertificate=True;")));
 
 //EmpleadoRepository
 builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
