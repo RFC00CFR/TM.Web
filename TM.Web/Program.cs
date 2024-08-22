@@ -13,13 +13,29 @@ builder.Services.AddControllersWithViews();
 
 //Connection String
 builder.Services.AddDbContext<TmDatabaseContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-PCB1OR7;Database=TM_database;Trusted_Connection=True;TrustServerCertificate=True;")));
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-6SDL2SS;Database=TM_database;Trusted_Connection=True;TrustServerCertificate=True;")));
 
 //EmpleadoRepository
 builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
 
 //TicketRepository
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
+
+
+// Configura el almacenamiento en memoria para la sesión
+builder.Services.AddDistributedMemoryCache();
+
+// Configura la sesión
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo de inactividad
+    options.Cookie.HttpOnly = true; // Cookie accesible solo por HTTP
+    options.Cookie.IsEssential = true; // Cookie esencial para la funcionalidad
+});
+
+// Agrega servicios para controladores y vistas
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -35,8 +51,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

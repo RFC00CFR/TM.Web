@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TM.Data.EmpleadoRepository;
 using TM.Arquitecture.Models;
+using TM.Web.Models;
 
 namespace TM.Web.Controllers
 {
@@ -23,15 +24,15 @@ namespace TM.Web.Controllers
 
         // POST: /Account/Login
         [HttpPost]
-        public async Task<IActionResult> Login(string nombre, string apellido)
+        public async Task<IActionResult> Login(AccountModel model)
         {
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido))
+            if (string.IsNullOrEmpty(model.Nombre) || string.IsNullOrEmpty(model.Apellido))
             {
                 ViewData["Error"] = "Nombre y apellido son obligatorios.";
                 return View();
             }
 
-            var empleado = _empleadoRepository.FindEmpleados(e => e.Nombre == nombre && e.Apellido == apellido).FirstOrDefault();
+            var empleado = _empleadoRepository.FindEmpleados(e => e.Nombre == model.Nombre && e.Apellido == model.Apellido).FirstOrDefault();
 
             if (empleado != null)
             {
@@ -39,7 +40,7 @@ namespace TM.Web.Controllers
                 // Por simplicidad, se redirige a la vista de tickets
                 // Guarda el ID del empleado en la sesión para futuras referencias
                 HttpContext.Session.SetInt32("EmpleadoId", empleado.Id);
-                return RedirectToAction("Index", "Tickets");
+                return RedirectToAction("Index", "Ticket");
             }
             else
             {

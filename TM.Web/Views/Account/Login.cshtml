@@ -1,27 +1,50 @@
-﻿@{
+﻿@model TM.Web.Models.AccountModel
+
+@{
     ViewData["Title"] = "Login";
 }
 
-<div class="container mt-5">
-    <h2>Login</h2>
-    <form asp-action="Login" method="post">
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required />
-        </div>
-        <div class="form-group mt-3">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" required />
-        </div>
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-    </form>
 
-    @if (ViewData["Error"] != null)
-    {
-        <div class="alert alert-danger mt-3">
-            @ViewData["Error"]
+
+<div>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <form asp-action="Login" method="post">
+
+                            <div class="mb-md-5 mt-md-4 pb-5">
+
+                                <h2 class="fw-bold mb-2 text-uppercase">Logueo</h2>
+                                <p class="text-white-50 mb-5">Ingresa tu nombre y apellido!</p>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <input type="text" id="nombre" name="Nombre" class="form-control form-control-lg"n required />
+                                    <label class="form-label" for="nombre">Nombre</label>
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <input type="text" id="apellido" name="Apellido" class="form-control form-control-lg" required />
+                                    <label class="form-label" for="apellido">Apellido</label>
+                                </div>
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Ingresar</button>
+                            </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+    </section>
 </div>
+<style>
+    .gradient-custom {
+        
+        background: none;
+     
+    }
+</style>
+

@@ -1,8 +1,7 @@
-﻿namespace TM.Web.Filters;
+﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-
-// Esto no esta implementado, lo copie de lo que hicimos en clase 
 
 namespace TM.Web.Filters
 {
@@ -12,17 +11,17 @@ namespace TM.Web.Filters
     {
         public ValidationsFilter() { }
 
-        public bool IsValid(string pass)
+        public bool IsValid(string nombre)
         {
-            if (string.IsNullOrEmpty(pass)) return false;
-            if (pass.Length < 8) return false;
-            var regex = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*\d)(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
-            if (!regex.IsMatch(pass)) return false; // validacion de la expresion regular
+            if (string.IsNullOrEmpty(nombre)) return false;
+            var regex = new Regex(@"^[a-zA-Z0-9]+$"); // Solo letras y números, sin caracteres especiales
+            if (!regex.IsMatch(nombre)) return false; // validación de la expresión regular
 
             return true;
         }
     }
 }
-//pass = pass.ToLower();
+
+//nombre = nombre.ToLower();
 //: base(DataType.EmailAddress)
 //public ValidationsFilter(string value) { }
