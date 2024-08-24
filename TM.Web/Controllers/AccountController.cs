@@ -15,7 +15,6 @@ namespace TM.Web.Controllers
         {
             _empleadoRepository = empleadoRepository;
         }
-
         // GET: /Account/Login
         public IActionResult Login()
         {
@@ -40,7 +39,7 @@ namespace TM.Web.Controllers
                 // Por simplicidad, se redirige a la vista de tickets
                 // Guarda el ID del empleado en la sesión para futuras referencias
                 HttpContext.Session.SetInt32("EmpleadoId", empleado.Id);
-                return RedirectToAction("Index", "Ticket");
+                return RedirectToAction("TicketsList", "Ticket");
             }
             else
             {
@@ -56,6 +55,7 @@ namespace TM.Web.Controllers
             HttpContext.Session.Remove("EmpleadoId");
             return RedirectToAction("Login");
         }
+
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿@model TM.Arquitecture.Models.Ticket
 
 @{
-    ViewData["Title"] = "Ticket Details";
+    ViewData["Title"] = "Account Ticket Details";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -60,5 +60,5 @@
         </dd>
     </dl>
     <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
-    <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+    <a href="@Url.Action("Tickets")" class="btn btn-primary">Back to List</a>
 </div>

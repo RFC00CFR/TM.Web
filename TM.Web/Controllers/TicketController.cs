@@ -29,6 +29,25 @@ namespace TM.Web.Controllers
             return View(tickets);
         }
 
+        // GET: Tickets user in session
+        public IActionResult TicketsList()
+        {
+            int? empleadoId = HttpContext.Session.GetInt32("EmpleadoId");
+
+            if (empleadoId.HasValue)
+            {
+                // Filtra los tickets por el empleado asignado o creado por el empleado en sesión
+                var tickets = _ticketRepository.GetAllTicketsWithIncludes().Where(t => t.AsignadoA == empleadoId.Value);
+
+                return View(tickets);
+            }
+            else
+            {
+                // Si no hay sesión activa, redirige al login o muestra un mensaje de error
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
         // GET: Ticket/Details/5
         public IActionResult Details(int id)
         {
@@ -39,6 +58,8 @@ namespace TM.Web.Controllers
             }
             return View(ticket);
         }
+
+
 
         // GET: Ticket/Create
         public IActionResult Create()
@@ -136,5 +157,7 @@ namespace TM.Web.Controllers
             _ticketRepository.DeleteTicket(id);
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }
