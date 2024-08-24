@@ -17,6 +17,8 @@ namespace TM.Data.TicketRepository
         IEnumerable<Ticket> FindTickets(Expression<Func<Ticket, bool>> predicate);
         IEnumerable<Ticket> GetByEstado(string estado);
         IEnumerable<Ticket> GetAllTicketsWithIncludes();  // correccion al mostra nombres en el listado de tickets
+
+        void FinalizarTicket(int id);
     }
 
     public class TicketRepository : Repository<Ticket>, ITicketRepository
@@ -104,5 +106,17 @@ namespace TM.Data.TicketRepository
                 return false;
             }
         }
+
+        //Metodo para cambiar el estado del ticket
+        public void FinalizarTicket(int ticketId)
+        {
+            var ticket = _context.Tickets.FirstOrDefault(t => t.Id == ticketId);
+            if (ticket != null)
+            {
+                ticket.Estado = "Finalizado"; // Cmabio del estado del ticket
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

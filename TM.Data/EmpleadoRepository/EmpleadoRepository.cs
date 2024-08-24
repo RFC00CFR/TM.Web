@@ -32,7 +32,16 @@ namespace TM.Data.EmpleadoRepository
 
         public bool DeleteEmpleado(int id)
         {
-            return Delete(id);
+            var empleado = _context.Empleados.Find(id);
+            if (empleado == null)
+            {
+                return false;
+            }
+
+            _context.Empleados.Remove(empleado);
+            _context.SaveChanges();
+
+            return true;
         }
 
         public IEnumerable<Empleado> GetAllEmpleados()

@@ -38,8 +38,8 @@ namespace TM.Web.Controllers
                 // Almacenar aquí la información del usuario en la sesión o en una cookie
                 // Por simplicidad, se redirige a la vista de tickets
                 // Guarda el ID del empleado en la sesión para futuras referencias
-                HttpContext.Session.SetInt32("EmpleadoId", empleado.Id);
-                return RedirectToAction("TicketsList", "Ticket");
+                HttpContext.Session.SetInt32("EmpleadoId", empleado.Id); // Almacena id del empleado en la sesion
+                return RedirectToAction("TicketsList", "Ticket"); // Redirige a la lista de tickets
             }
             else
             {

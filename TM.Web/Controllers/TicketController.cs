@@ -157,7 +157,12 @@ namespace TM.Web.Controllers
             _ticketRepository.DeleteTicket(id);
             return RedirectToAction(nameof(Index));
         }
-
+        // Finalizar ticket
+        public IActionResult Finalizar(int id)
+        {
+            _ticketRepository.FinalizarTicket(id);
+            return RedirectToAction("Details", new { id = id });
+        }
 
     }
 }
