@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/TM.Arquitecture/Models/TmDatabaseContext.cs
+/TM.Web/Program.cs
+/TM.Web/appsettings.json

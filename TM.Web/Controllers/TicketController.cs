@@ -56,10 +56,19 @@ namespace TM.Web.Controllers
             {
                 return NotFound();
             }
+
+            // Verificar si la sesión del usuario está activa
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                ViewBag.ReturnUrl = "TicketsList"; // Si la sesión está activa, redirige a TicketsList
+            }
+            else
+            {
+                ViewBag.ReturnUrl = "Index"; // Si no, redirige a Index (vista general)
+            }
+
             return View(ticket);
         }
-
-
 
         // GET: Ticket/Create
         public IActionResult Create()

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TM.Arquitecture.Models;
 using TM.Data.EmpleadoRepository;
@@ -13,7 +14,7 @@ builder.Services.AddControllersWithViews();
 
 //Connection String
 builder.Services.AddDbContext<TmDatabaseContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-PCB1OR7;Database=TM_database;Trusted_Connection=True;TrustServerCertificate=True;")));
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-6SDL2SS;Database=TM_database;Trusted_Connection=True;TrustServerCertificate=True;")));
 
 
 //EmpleadoRepository
@@ -35,6 +36,15 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Cookie esencial para la funcionalidad
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+    });
+
+
+
 // Agrega servicios para controladores y vistas
 builder.Services.AddControllersWithViews();
 
@@ -52,8 +62,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseSession();
+app.UseAuthentication(); // Asegúrate de que esté antes de UseAuthorization
 app.UseAuthorization();
+app.UseSession(); // UseSession debe estar después de UseRouting
 
 
 app.MapControllerRoute(

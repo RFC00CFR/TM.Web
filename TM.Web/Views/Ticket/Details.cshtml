@@ -1,7 +1,9 @@
 ﻿@model TM.Arquitecture.Models.Ticket
 
+
 @{
     ViewData["Title"] = "Ticket Details";
+    bool isUserLoggedIn = User?.Identity?.IsAuthenticated ?? false;
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -67,8 +69,16 @@
         </dd>
     </dl>
 
-    <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
-    <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
-    <a href="@Url.Action("Finalizar", "Ticket", new { id = Model.Id })" class="btn btn-success">Finalizar Ticket</a>
+    @if (!isUserLoggedIn)
+    {
+        <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
+        <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+    }
+    else
+    {
+        <a href="@Url.Action("TicketsList")" class="btn btn-primary">Back to List</a>
+        <a href="@Url.Action("Finalizar", "Ticket", new { id = Model.Id })" class="btn btn-success">Finalizar Ticket</a>
+    }
 
+    
 </div>

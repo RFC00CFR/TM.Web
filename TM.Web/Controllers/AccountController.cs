@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using TM.Data.EmpleadoRepository;
 using TM.Arquitecture.Models;
 using TM.Web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace TM.Web.Controllers
 {
@@ -35,11 +38,24 @@ namespace TM.Web.Controllers
 
             if (empleado != null)
             {
-                // Almacenar aquí la información del usuario en la sesión o en una cookie
-                // Por simplicidad, se redirige a la vista de tickets
-                // Guarda el ID del empleado en la sesión para futuras referencias
-                HttpContext.Session.SetInt32("EmpleadoId", empleado.Id); // Almacena id del empleado en la sesion
-                return RedirectToAction("TicketsList", "Ticket"); // Redirige a la lista de tickets
+                // Crear claims y principal
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, empleado.Nombre),
+            new Claim(ClaimTypes.NameIdentifier, empleado.Id.ToString())
+            
+        };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                // Sign in
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                // Almacenar el ID del empleado en la sesión
+                HttpContext.Session.SetInt32("EmpleadoId", empleado.Id);
+
+                return RedirectToAction("TicketsList", "Ticket");
             }
             else
             {
@@ -48,12 +64,18 @@ namespace TM.Web.Controllers
             }
         }
 
+
         // Para el logout
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            // Cierra la sesión de autenticación
+            await HttpContext.SignOutAsync();
+
             // Elimina la información del usuario de la sesión
             HttpContext.Session.Remove("EmpleadoId");
-            return RedirectToAction("Login");
+
+            // Redirige a la página de login o a otra página específica
+            return RedirectToAction("Index","Home");
         }
 
     }
