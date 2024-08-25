@@ -71,6 +71,7 @@
 
     @if (!isUserLoggedIn)
     {
+     
         <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
         <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
     }

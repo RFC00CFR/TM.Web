@@ -15,6 +15,7 @@ namespace TM.Web.Controllers
         private readonly ITicketRepository _ticketRepository;
         private readonly IEmpleadoRepository _empleadoRepository;
 
+
         public TicketController(ITicketRepository ticketRepository, IEmpleadoRepository empleadoRepository)
         {
             _ticketRepository = ticketRepository;

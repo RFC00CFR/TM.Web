@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 
+
 namespace TM.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IEmpleadoRepository _empleadoRepository;
+
 
         public AccountController(IEmpleadoRepository empleadoRepository)
         {
