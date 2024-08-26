@@ -8,7 +8,9 @@
 
 <h4>Ticket</h4>
 <hr />
-<form asp-action="Edit">
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="Descripcion" class="control-label"></label>
         <input asp-for="Descripcion" class="form-control" />
@@ -16,7 +18,11 @@
     </div>
     <div class="form-group">
         <label asp-for="Prioridad" class="control-label"></label>
-        <input asp-for="Prioridad" class="form-control" />
+        <select asp-for="Prioridad" class="form-control">
+            <option value="Alto">Alto</option>
+            <option value="Medio">Medio</option>
+            <option value="Bajo">Bajo</option>
+        </select>
         <span asp-validation-for="Prioridad" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -31,7 +37,12 @@
     </div>
     <div class="form-group">
         <label asp-for="Estado" class="control-label"></label>
-        <input asp-for="Estado" class="form-control" />
+        <select asp-for="Estado" class="form-control">
+            <option value="Cancelado">Cancelado</option>
+            <option value="Asignado">Asignado</option>
+            <option value="Aprobado">Aprobado</option>
+            <option value="Revision">Revisión</option>
+        </select>
         <span asp-validation-for="Estado" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -44,6 +55,7 @@
         <select asp-for="AsignadoA" class="form-control" asp-items="ViewBag.AsignadoA"></select>
         <span asp-validation-for="AsignadoA" class="text-danger"></span>
     </div>
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>

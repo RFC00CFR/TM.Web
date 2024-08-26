@@ -124,7 +124,7 @@ namespace TM.Web.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -171,7 +171,7 @@ namespace TM.Web.Controllers
         public IActionResult Finalizar(int id)
         {
             _ticketRepository.FinalizarTicket(id);
-            return RedirectToAction("Details", new { id = id });
+            return RedirectToAction("TicketsList", new { id = id });
         }
 
     }
