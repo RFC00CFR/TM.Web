@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Login";
 }
+
 <div>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -10,27 +11,28 @@
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card bg-dark text-white" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
-                            <form asp-action="Login" method="post">
+                            <h2 class="fw-bold mb-2 text-uppercase">Logueo</h2>
+                            <p class="text-white-50 mb-5">Ingresa tu nombre y apellido!</p>
 
-                            <div class="mb-md-5 mt-md-4 pb-5">
-
-
-                                <h2 class="fw-bold mb-2 text-uppercase">Logueo</h2>
-                                <p class="text-white-50 mb-5">Ingresa tu nombre y apellido!</p>
-
-                                <div data-mdb-input-init class="form-outline form-white mb-4">
-                                    <input type="text" id="nombre" name="Nombre" class="form-control form-control-lg"n required />
-                                    <label class="form-label" for="nombre">Nombre</label>
+                            <form asp-action="Login" method="post" novalidate>
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-label" asp-for="Nombre"></label>
+                                    <input class="form-control form-control-lg" asp-for="Nombre" />
+                                    <span class="text-danger" asp-validation-for="Nombre"></span>
                                 </div>
 
-                                <div data-mdb-input-init class="form-outline form-white mb-4">
-                                    <input type="text" id="apellido" name="Apellido" class="form-control form-control-lg" required />
-                                    <label class="form-label" for="apellido">Apellido</label>
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-label" asp-for="Apellido"></label>
+                                    <input class="form-control form-control-lg" asp-for="Apellido" />
+                                    <span class="text-danger" asp-validation-for="Apellido"></span>
                                 </div>
-                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Ingresar</button>
-                            </div>
+
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit">Ingresar</button>
                             </form>
 
+                            <div class="mt-3">
+                                <span class="text-danger" asp-validation-summary="All"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,12 +40,10 @@
         </div>
     </section>
 </div>
-<style>
-    .gradient-custom {
-        
-        background: none;
-     
-    }
-</style>
 
-
+@section Scripts {
+    <!-- Scripts de validación necesarios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+}

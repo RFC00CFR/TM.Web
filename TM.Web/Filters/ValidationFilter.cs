@@ -1,27 +1,28 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace TM.Web.Filters
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter,
-        AllowMultiple = false)]
-    public class ValidationsFilter : Attribute
+    public class ValidationsFilter : ValidationAttribute
     {
-        public ValidationsFilter() { }
+        private readonly Regex _regex = new Regex(@"^[a-zA-Z0-9]+$"); // Solo letras y números
 
-        public bool IsValid(string nombre)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (string.IsNullOrEmpty(nombre)) return false;
-            var regex = new Regex(@"^[a-zA-Z0-9]+$"); // Solo letras y números, sin caracteres especiales
-            if (!regex.IsMatch(nombre)) return false; // validación de la expresión regular
+            var input = value as string;
 
-            return true;
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return new ValidationResult("El campo es requerido.");
+            }
+
+            if (!_regex.IsMatch(input))
+            {
+                return new ValidationResult("El campo solo puede contener letras y números, sin caracteres especiales.");
+            }
+
+            return ValidationResult.Success;
         }
     }
 }
-
-//nombre = nombre.ToLower();
-//: base(DataType.EmailAddress)
-//public ValidationsFilter(string value) { }
